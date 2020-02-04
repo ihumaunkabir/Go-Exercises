@@ -9,7 +9,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"go.mongodb.org/mongo-driver/bson"
-	"github.com/oasiscse/bookx/helper"
+	"github.com/oasiscse/bookx/dbcon"
 	"github.com/oasiscse/bookx/models"
 
 )
@@ -21,6 +21,7 @@ func main() {
   	
 	r.HandleFunc("/api/books", getBooks).Methods("GET")
 	r.HandleFunc("/api/books", createBook).Methods("POST")
+	r.HandleFunc("/api/books/{year}", searchBook).Methods("GET")
   	
 	log.Fatal(http.ListenAndServe(":3000", r))
 
@@ -35,12 +36,12 @@ func createBook(w http.ResponseWriter, r *http.Request) {
 
 	_ = json.NewDecoder(r.Body).Decode(&book)
 
-	collection := helper.ConnectDB()
+	collection := dbcon.ConnectDB()
 
 	result, err := collection.InsertOne(context.TODO(), book)
 
 	if err != nil {
-		helper.GetError(err, w)
+		dbcon.GetError(err, w)
 		return
 	}
 
@@ -54,12 +55,12 @@ func getBooks(w http.ResponseWriter, r *http.Request) {
 
 	var books []models.Book
 
-	collection := helper.ConnectDB()
+	collection := dbcon.ConnectDB()
 
 	cur, err := collection.Find(context.TODO(), bson.M{})
 
 	if err != nil {
-		helper.GetError(err, w)
+		dbcon.GetError(err, w)
 		return
 	}
 
@@ -85,3 +86,26 @@ func getBooks(w http.ResponseWriter, r *http.Request) {
 }
 
 
+func searchBook(w http.ResponseWriter, r *http.Request) {
+	
+	w.Header().Set("Content-Type", "application/json")
+
+	var book models.Book
+	
+	var params = mux.Vars(r)
+
+	
+	year := string(params["year"])
+	collection := dbcon.ConnectDB()
+
+
+	filter := bson.M{"year": year}
+	err := collection.FindOne(context.TODO(), filter).Decode(&book)
+
+	if err != nil {
+		dbcon.GetError(err, w)
+		return
+	}
+
+	json.NewEncoder(w).Encode(book)
+}
