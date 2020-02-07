@@ -16,8 +16,6 @@ func ConnectDB() *mongo.Collection {
 
 	
 	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
-
-	
 	client, err := mongo.Connect(context.TODO(), clientOptions)
 
 	if err != nil {
@@ -26,7 +24,7 @@ func ConnectDB() *mongo.Collection {
 
 	fmt.Println("Connected to MongoDB!")
 
-	collection := client.Database("test").Collection("bookinfo")
+	collection := client.Database("book_information").Collection("books")
 
 	return collection
 }
