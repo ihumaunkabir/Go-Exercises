@@ -9,5 +9,6 @@ type Book struct {
 	Author string       `json:"author, omitempty" bson:"author,omitempty"`
 	Publisher   string  `json:"psher,omitempty" bson:"psher,omitempty"`
 	Year string 		`json:"year,omitempty" bson:"year,omitempty"`
-	Category string 	`json:"cat, omitempty" bson: "cat, omitempty"`
+	Category string 	`json:"cat, omitempty" bson:"cat, omitempty"`
+	BookID string 		`json:"bookid, omitempty" bson:"bookid, omitempty"`
 }
