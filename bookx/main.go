@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
 	"go.mongodb.org/mongo-driver/bson"
@@ -17,8 +18,9 @@ import (
 func main() {
 
 	r := mux.NewRouter()
+	port := os.Getenv("PORT")
 
-  	
+  	r.HandleFunc("/", homepage).Methods("GET")
 	r.HandleFunc("/api/books", getBooks).Methods("GET")
 	r.HandleFunc("/api/books", createBook).Methods("POST")
 	r.HandleFunc("/api/bookid/{bookid}", searchByID).Methods("GET")
@@ -26,8 +28,15 @@ func main() {
 	r.HandleFunc("/api/booky/{year}", searchBook).Methods("GET")
 	r.HandleFunc("/api/books/{title}/{author}/{psher}/{year}/{cat}/{bookid}", createURL).Methods("POST")
 
-	log.Fatal(http.ListenAndServe(":3000", r))
+	log.Fatal(http.ListenAndServe(":"+port, r))
 
+}
+
+
+func homepage(w http.ResponseWriter, r *http.Request){
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write([]byte(`{"bookx" : "A clever monkey is cooking for you, wait..."}`))
 }
 
 
