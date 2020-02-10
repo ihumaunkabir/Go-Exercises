@@ -1,0 +1,11 @@
+package: github.com/oasiscse/bookx
+import:
+- package: github.com/gorilla/mux
+  version: ~1.7.3
+- package: go.mongodb.org/mongo-driver
+  version: ~1.3.0
+  subpackages:
+  - bson
+  - bson/primitive
+  - mongo
+  - mongo/options
