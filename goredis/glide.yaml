@@ -1,0 +1,8 @@
+package: github.com/oasiscse/goredis
+import:
+- package: github.com/gomodule/redigo
+  version: ~2.0.0
+  subpackages:
+  - redis
+- package: github.com/gorilla/mux
+  version: ~1.7.4
