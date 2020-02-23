@@ -1,0 +1,11 @@
+hash: fe0b58cc7ae2b7666b65d88ae3c4804d8fbd18dc474100bbd749a9936ff3293a
+updated: 2020-02-23T23:55:07.4376816+06:00
+imports:
+- name: github.com/gomodule/redigo
+  version: 9c11da706d9b7902c6da69c592f75637793fe121
+  subpackages:
+  - internal
+  - redis
+- name: github.com/gorilla/mux
+  version: 75dcda0896e109a2a22c9315bca3bb21b87b2ba5
+testImports: []
