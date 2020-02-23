@@ -15,8 +15,12 @@ import (
 func ConnectDB() *mongo.Collection {
 
 	
+<<<<<<< HEAD
+	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
+=======
 	//clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
 	clientOptions := options.Client().ApplyURI("mongodb+srv://bookxadmin:bookx@bookxcluster-bcumy.mongodb.net/test?retryWrites=true&w=majority")
+>>>>>>> new_branch
 	client, err := mongo.Connect(context.TODO(), clientOptions)
 
 	if err != nil {
@@ -25,7 +29,11 @@ func ConnectDB() *mongo.Collection {
 
 	fmt.Println("Connected to MongoDB!")
 
+<<<<<<< HEAD
+	collection := client.Database("book_information").Collection("books")
+=======
 	collection := client.Database("bookxcluster").Collection("books")
+>>>>>>> new_branch
 
 	return collection
 }

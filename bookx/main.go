@@ -6,7 +6,10 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+<<<<<<< HEAD
+=======
 	"os"
+>>>>>>> new_branch
 
 	"github.com/gorilla/mux"
 	"go.mongodb.org/mongo-driver/bson"
@@ -18,6 +21,16 @@ import (
 func main() {
 
 	r := mux.NewRouter()
+<<<<<<< HEAD
+
+  	
+	r.HandleFunc("/api/books", getBooks).Methods("GET")
+	r.HandleFunc("/api/books", createBook).Methods("POST")
+	r.HandleFunc("/api/books/{bookid}", searchByID).Methods("GET")
+	r.HandleFunc("/api/booky/{year}", searchBook).Methods("GET")
+
+	log.Fatal(http.ListenAndServe(":3000", r))
+=======
 	port := os.Getenv("PORT")
 
   	r.HandleFunc("/", homepage).Methods("GET")
@@ -29,10 +42,13 @@ func main() {
 	r.HandleFunc("/api/books/{title}/{author}/{psher}/{year}/{cat}/{bookid}", createURL).Methods("POST")
 
 	log.Fatal(http.ListenAndServe(":"+port, r))
+>>>>>>> new_branch
 
 }
 
 
+<<<<<<< HEAD
+=======
 func homepage(w http.ResponseWriter, r *http.Request){
 
 	w.Header().Set("Content-Type", "application/json")
@@ -40,6 +56,7 @@ func homepage(w http.ResponseWriter, r *http.Request){
 }
 
 
+>>>>>>> new_branch
 func createBook(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
@@ -58,6 +75,8 @@ func createBook(w http.ResponseWriter, r *http.Request) {
 }
 
 
+<<<<<<< HEAD
+=======
 func createURL(w http.ResponseWriter, r *http.Request){
 
 	w.Header().Set("Content-Type", "application/json")
@@ -92,6 +111,7 @@ func createURL(w http.ResponseWriter, r *http.Request){
 }
 
 
+>>>>>>> new_branch
 func getBooks(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
@@ -141,6 +161,13 @@ func searchBook(w http.ResponseWriter, r *http.Request) {
 	err := collection.FindOne(context.TODO(), filter).Decode(&book)
 
 	if err != nil {
+<<<<<<< HEAD
+		dbcon.GetError(err, w)
+		return
+	}
+
+	json.NewEncoder(w).Encode(book)
+=======
 		w.Write([]byte(`{"message": "Something went wrong."}`))
 		//dbcon.GetError(err, w)
 		//return
@@ -149,6 +176,7 @@ func searchBook(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(book)
 	}
 
+>>>>>>> new_branch
 }
 
 
@@ -165,6 +193,16 @@ func searchByID(w http.ResponseWriter, r *http.Request){
 	err := collection.FindOne(context.TODO(), filter).Decode(&book)
 
 	if err != nil {
+<<<<<<< HEAD
+		dbcon.GetError(err, w)
+		return
+
+	}
+
+	json.NewEncoder(w).Encode(book)
+
+
+=======
 		w.Write([]byte(`{"message": "Something went wrong."}`))
 		//dbcon.GetError(err, w)
 		//return
@@ -173,6 +211,7 @@ func searchByID(w http.ResponseWriter, r *http.Request){
 		json.NewEncoder(w).Encode(book)
 	}
 
+>>>>>>> new_branch
 }
 
 func deleteByID(w http.ResponseWriter, r *http.Request){
@@ -180,17 +219,30 @@ func deleteByID(w http.ResponseWriter, r *http.Request){
 	w.Header().Set("Content-Type", "application/json")
 
 	var params = mux.Vars(r)
+<<<<<<< HEAD
+	bookid := string(params["bookid"])
+=======
 	bookid := params["bookid"]
+>>>>>>> new_branch
 	collection := dbcon.ConnectDB()
 
 	filter := bson.M{"bookid": bookid}
 	delRes, err := collection.DeleteOne(context.TODO(), filter)
 
 	if err != nil {
+<<<<<<< HEAD
+		dbcon.GetError(err, w)
+		return
+	}
+
+	json.NewEncoder(w).Encode(delRes)
+
+=======
 		//dbcon.GetError(err, w)
 		//return
 		w.Write([]byte(`{"message": "Something went wrong."}`))
 	} else{
 		json.NewEncoder(w).Encode(delRes)
 	}
+>>>>>>> new_branch
 }
